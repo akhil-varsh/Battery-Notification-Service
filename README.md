@@ -44,20 +44,29 @@ Node.js script that sends FCM notifications to users who haven't checked their l
 
 **Run the Notification Service (Weekly Job):**
 ```bash
-node index.js
+npm start
+# OR: node src/jobs/run-campaign.js
 ```
 *Recommended to schedule this with cron (e.g., every Sunday).*
 
 **Start Click Tracking API:**
 ```bash
-node click-tracking-api.js
+npm run api
+# OR: node src/api/server.js
 ```
 
 **Generate Analytics Report:**
 ```bash
-node analytics-dashboard.js report
+npm run analytics -- report
+# OR: node src/jobs/run-analytics.js report
 ```
 
 ## Reviewer Notes
 
-I have included a `test-script.js` which mocks the database interactions. You can run `node test-script.js` to verify the logic flow without needing active DB connections.
+I have refactored the project into a scalable structure:
+- `src/services`: Core business logic.
+- `src/api`: Express server.
+- `src/jobs`: Standalone scripts/cron jobs.
+- `src/config`: Shared configuration.
+
+I have also included a `scripts/test-script.js` which mocks the database interactions. You can run `npm test` to verify the logic flow without needing active DB connections.

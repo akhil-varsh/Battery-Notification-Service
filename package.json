@@ -4,14 +4,19 @@
   "description": "FCM notification service for lock battery monitoring",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/jobs/run-campaign.js",
+    "api": "node src/api/server.js",
+    "analytics": "node src/jobs/run-analytics.js",
+    "test": "node scripts/test-script.js",
+    "test:integration": "node scripts/integration-test.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.1490.0",
+    "dotenv": "^16.3.1",
+    "express": "^5.2.1",
     "firebase-admin": "^11.11.1",
     "pg": "^8.11.3",
-    "dotenv": "^16.3.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 // This script mocks AWS and PG interactions to verify the logic of the BatteryNotificationService
 
-const BatteryNotificationService = require('./index');
+const BatteryNotificationService = require('../src/services/NotificationService');
 
 // Mock Data
 const MOCK_STALE_LOCKS = [
