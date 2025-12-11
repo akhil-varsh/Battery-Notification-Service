@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Secrets & Keys
+firebase-service-account.json
+service-account.json
+*-key.json
+*.pem
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS Generated
+.DS_Store
+Thumbs.db
+
+# Private Notes (Optional)
+INTERVIEW_PREP.md
+ASSIGNMENT_NOTES.md
+
+# Editor directories
+.vscode/
+.idea/

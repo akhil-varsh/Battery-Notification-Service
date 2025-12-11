@@ -1,0 +1,20 @@
+{
+  "name": "battery-notification-service",
+  "version": "1.0.0",
+  "description": "FCM notification service for lock battery monitoring",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1490.0",
+    "firebase-admin": "^11.11.1",
+    "pg": "^8.11.3",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
