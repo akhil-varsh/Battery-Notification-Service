@@ -44,8 +44,6 @@ class BatteryNotificationService {
 
                 lastEvaluatedKey = result.LastEvaluatedKey;
 
-                // Safety break for assignment context (optional, but good for testing loops)
-                // if (itemsFetched > 100000) break; 
 
             } while (lastEvaluatedKey);
 

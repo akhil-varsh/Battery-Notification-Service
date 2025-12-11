@@ -8,9 +8,6 @@ async function main() {
 
     try {
         switch (command) {
-            // Logic for report generation - simplified by copying the logic from original analytics-dashboard.js
-            // Since it was printing to console, we can keep it here or move printing logic to service.
-            // Keeping it here for now as "presentation layer"
             case 'report':
                 await generateConsoleReport(service);
                 break;

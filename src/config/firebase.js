@@ -5,11 +5,8 @@ const serviceAccountPath = process.env.FIREBASE_PRIVATE_KEY_PATH;
 let firebaseApp;
 
 try {
-    // Only try to require if the path looks like a real file config
     if (serviceAccountPath && !serviceAccountPath.startsWith('MOCK')) {
-        const serviceAccount = require(`../../${serviceAccountPath}`); // Adjust path relative to this file if needed, or better, use absolute/root relative
-        // Actually, require resolves relative to the file. If env var is "./firebase-key.json", it means relative to CWD usually in node.
-        // Let's use process.cwd() to be safe.
+        const serviceAccount = require(`../../${serviceAccountPath}`);    
         const path = require('path');
         const absolutePath = path.resolve(process.cwd(), serviceAccountPath);
 

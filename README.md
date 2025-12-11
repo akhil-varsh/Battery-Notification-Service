@@ -16,11 +16,11 @@ Node.js script that sends FCM notifications to users who haven't checked their l
 
 ## Architecture
 
-![System Architecture](architecture_diagram.png)
+![System Architecture](docs/architecture_diagram.png)
 
 ## Database Schema
 
-![Database Schema](db_schema.png)
+![Database Schema](docs/db_schema.png)
 
 
 
@@ -35,7 +35,7 @@ Node.js script that sends FCM notifications to users who haven't checked their l
 3.  **Database**:
     Run schema migration:
     ```bash
-    psql -f database-schema.sql
+    psql -f database/database-schema.sql
     ```
 4.  **Firebase**:
     Add your `firebase-service-account.json` to the root directory.
@@ -61,12 +61,18 @@ npm run analytics -- report
 # OR: node src/jobs/run-analytics.js report
 ```
 
+## Documentation
+
+-   [Mobile Integration Guide](docs/MOBILE_INTEGRATION.md): How to implement click tracking and conversion reporting in the mobile app.
+
 ## Reviewer Notes
 
 I have refactored the project into a scalable structure:
-- `src/services`: Core business logic.
-- `src/api`: Express server.
-- `src/jobs`: Standalone scripts/cron jobs.
-- `src/config`: Shared configuration.
+-   `src/services`: Core business logic.
+-   `src/api`: Express server.
+-   `src/jobs`: Standalone scripts/cron jobs.
+-   `src/config`: Shared configuration.
 
-I have also included a `scripts/test-script.js` which mocks the database interactions. You can run `npm test` to verify the logic flow without needing active DB connections.
+**Testing:**
+-   `npm test`: Runs a mock unit test (no DB required).
+-   `npm run test:integration`: Verifies connections to Postgres, DynamoDB, and Firebase (requires running services).

@@ -2,8 +2,8 @@ const pool = require('../config/db');
 
 class AnalyticsService {
 
-    async getCampaignEffectiveness(campaignId = null) {
-        let query = `
+  async getCampaignEffectiveness(campaignId = null) {
+    let query = `
       SELECT 
         campaign_id,
         campaign_type,
@@ -20,54 +20,25 @@ class AnalyticsService {
       FROM campaign_effectiveness
     `;
 
-        const params = [];
-        if (campaignId) {
-            query += ' WHERE campaign_id = $1';
-            params.push(campaignId);
-        }
-
-        query += ' ORDER BY created_at DESC';
-
-        try {
-            const result = await pool.query(query, params);
-            return result.rows;
-        } catch (error) {
-            console.error('Error fetching campaign effectiveness:', error);
-            throw error;
-        }
+    const params = [];
+    if (campaignId) {
+      query += ' WHERE campaign_id = $1';
+      params.push(campaignId);
     }
 
-    async getWeeklyTrends(weeks = 8) {
-        const query = `
-      SELECT 
-        DATE_TRUNC('week', created_at) as week_start,
-        COUNT(*) as campaigns_count,
-        SUM(total_sent) as total_sent,
-        SUM(total_clicks) as total_clicks,
-        SUM(total_battery_checks) as total_actions,
-        ROUND(AVG(click_through_rate), 2) as avg_ctr,
-        ROUND(AVG(conversion_rate), 2) as avg_conversion_rate,
-        ROUND(
-          CASE 
-            WHEN SUM(total_sent) > 0 THEN 
-              (SUM(total_clicks)::DECIMAL / SUM(total_sent)) * 100
-            ELSE 0 
-          END, 2
-        ) as overall_ctr,
-        ROUND(
-          CASE 
-            WHEN SUM(total_sent) > 0 THEN 
-              (SUM(total_battery_checks)::DECIMAL / SUM(total_sent)) * 100
-            ELSE 0 
-          END, 2
-        ) as overall_conversion_rate
-      FROM campaign_effectiveness
-    `;
-        // Note: The original query had a WHERE clause that might have been missing slightly in my view, but usually correct.
-        // Let's add the filter back if it was there or should be.
-        // Yes: WHERE created_at >= CURRENT_DATE - INTERVAL '${weeks} weeks'
-        // I need to insert it before GROUP BY.
-        const fullQuery = `
+    query += ' ORDER BY created_at DESC';
+
+    try {
+      const result = await pool.query(query, params);
+      return result.rows;
+    } catch (error) {
+      console.error('Error fetching campaign effectiveness:', error);
+      throw error;
+    }
+  }
+
+  async getWeeklyTrends(weeks = 8) {
+    const query = `
       SELECT 
         DATE_TRUNC('week', created_at) as week_start,
         COUNT(*) as campaigns_count,
@@ -96,17 +67,17 @@ class AnalyticsService {
       ORDER BY week_start DESC
     `;
 
-        try {
-            const result = await pool.query(fullQuery);
-            return result.rows;
-        } catch (error) {
-            console.error('Error fetching weekly trends:', error);
-            throw error;
-        }
+    try {
+      const result = await pool.query(query);
+      return result.rows;
+    } catch (error) {
+      console.error('Error fetching weekly trends:', error);
+      throw error;
     }
+  }
 
-    async getUserEngagementStats() {
-        const query = `
+  async getUserEngagementStats() {
+    const query = `
       WITH user_engagement AS (
         SELECT 
           nl.user_id,
@@ -137,17 +108,17 @@ class AnalyticsService {
       FROM user_engagement
     `;
 
-        try {
-            const result = await pool.query(query);
-            return result.rows[0];
-        } catch (error) {
-            console.error('Error fetching user engagement stats:', error);
-            throw error;
-        }
+    try {
+      const result = await pool.query(query);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error fetching user engagement stats:', error);
+      throw error;
     }
+  }
 
-    async getResponseTimeAnalysis() {
-        const query = `
+  async getResponseTimeAnalysis() {
+    const query = `
       SELECT 
         bca.campaign_id,
         AVG(bca.days_after_notification) as avg_response_days,
@@ -161,14 +132,14 @@ class AnalyticsService {
       ORDER BY avg_response_days ASC
     `;
 
-        try {
-            const result = await pool.query(query);
-            return result.rows;
-        } catch (error) {
-            console.error('Error fetching response time analysis:', error);
-            throw error;
-        }
+    try {
+      const result = await pool.query(query);
+      return result.rows;
+    } catch (error) {
+      console.error('Error fetching response time analysis:', error);
+      throw error;
     }
+  }
 }
 
 module.exports = AnalyticsService;
