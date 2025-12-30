@@ -76,7 +76,6 @@ async function checkIntegrations() {
     }
 }
 
-// Cleanup pool on exit
 process.on('exit', () => pool.end());
 
 checkIntegrations();
